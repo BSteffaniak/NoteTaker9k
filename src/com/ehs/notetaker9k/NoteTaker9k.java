@@ -1,5 +1,7 @@
 package com.ehs.notetaker9k;
 
+import java.util.ArrayList;
+
 /**
  * 
  * 
@@ -11,6 +13,8 @@ package com.ehs.notetaker9k;
  */
 public class NoteTaker9k
 {
+	private ArrayList<Sticky>	stickies;
+	
 	/**
 	 * 
 	 * 
@@ -26,6 +30,15 @@ public class NoteTaker9k
 	 */
 	public NoteTaker9k()
 	{
+		stickies = new ArrayList<Sticky>();
+		
+		OptionsFrame f = new OptionsFrame(this);
+	}
+	
+	public void addSticky()
+	{
 		Sticky sticky = new Sticky();
+		
+		stickies.add(sticky);
 	}
 }
