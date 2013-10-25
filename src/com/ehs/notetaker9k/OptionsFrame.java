@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
@@ -33,16 +34,16 @@ public class OptionsFrame
 		
 		SystemTray tray   = SystemTray.getSystemTray();
 		
-		Image stickyImage = Sticky.getStickyImage(128, 128);
+		Image stickyImage = Sticky.getStickyImage(128, 128, 30);
 		
-		icon     = new TrayIcon(stickyImage, "NoteTaker9k");
+		icon = new TrayIcon(stickyImage, "NoteTaker9k");
 		icon.setImageAutoSize(true);
 		
-		PopupMenu menu = new PopupMenu();
+		final PopupMenu menu = new PopupMenu();
 
 	    final MenuItem newSticky = new MenuItem("New Sticky");
 	    menu.add(newSticky);
-	    final MenuItem menuItem = new MenuItem("Quit");
+	    final MenuItem menuItem  = new MenuItem("Quit");
 	    menu.add(menuItem);
 		
 		ActionListener menuListener = new ActionListener()
@@ -64,6 +65,33 @@ public class OptionsFrame
 		newSticky.addActionListener(menuListener);
 	    
 	    icon.setPopupMenu(menu);
+	    icon.addMouseListener(new MouseListener()
+		{
+			public void mouseReleased(MouseEvent e)
+			{
+//				menu.show(frame, e.getX(), e.getY());
+			}
+			
+			public void mousePressed(MouseEvent e)
+			{
+				
+			}
+			
+			public void mouseExited(MouseEvent e)
+			{
+				
+			}
+			
+			public void mouseEntered(MouseEvent e)
+			{
+				
+			}
+			
+			public void mouseClicked(MouseEvent e)
+			{
+				
+			}
+		});
 		
 		MouseAdapter mouseAdapter = new MouseAdapter()
 		{

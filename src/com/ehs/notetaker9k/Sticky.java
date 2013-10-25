@@ -19,6 +19,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import sun.security.krb5.internal.crypto.CksumType;
+
 /**
  * 
  * 
@@ -98,13 +100,13 @@ public class Sticky
 //		frame.setFocusableWindowState(false);
 //		frame.toBack();
 		
-		image         = getStickyImage(frame.getWidth(), frame.getHeight());
+		topPartHeight = frame.getHeight() / 9;
 		
-		topPartHeight = image.getHeight() / 10;
+		image         = getStickyImage(frame.getWidth(), frame.getHeight(), topPartHeight);
 		
 		graphics = image.createGraphics();
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		graphics.setStroke(new BasicStroke(2.0f));
+		graphics.setStroke(new BasicStroke(2.5f));
 		graphics.setColor(Color.BLACK);
 		
 		menu = new PopupMenu();
@@ -229,32 +231,53 @@ public class Sticky
 		frame.setLocation(x, y);
 	}
 	
-	private static void drawStickyNote(Graphics2D g, int width, int height)
+	private static void drawStickyNote(Graphics2D g, int width, int height, int topPartHeight)
 	{
-		Color yellow = new Color(255, 255, 0);
-		
-		int topPartHeight = height / 10;
+		// Sticky note background
+		Color yellow = new Color(255, 255, 130);
 		
 		g.setColor(yellow);
 		g.fillRect(0, 0, width, height);
-		
-		Color topPart       = new Color(220, 220, 0);
+
+		// Top part of the Sticky note
+		Color topPart       = new Color(240, 240, 110);
 		
 		g.setColor(topPart);
 		g.fillRect(0, 0, width, topPartHeight);
 		
-		Color topPartDivider = new Color(140, 140, 0);
+		// Top part divider
+		Color topPartDivider = new Color(170, 170, 90);
 		
 		g.setColor(topPartDivider);
 		g.fillRect(0, topPartHeight, width, 1);
+		
+		// Close Button background
+		Color closeButtonBackground = new Color(220, 220, 100);
+		
+		int closeButtonSize = 20;
+		
+		int closeXOffset    = 5;
+		int closeYOffset    = 5;
+		
+		int borderSize      = 2;
+		
+		g.setColor(closeButtonBackground);
+		g.fillRect(closeXOffset - borderSize, closeYOffset - borderSize, closeButtonSize + 1 + borderSize * 2, closeButtonSize + 1 + borderSize * 2);
+		
+		// Close Button
+		Color closeButton = new Color(100, 100, 90);
+		
+		g.setColor(closeButton);
+		g.drawLine(0 + closeXOffset, 0 + closeYOffset, closeButtonSize + closeXOffset, closeButtonSize + closeYOffset);
+		g.drawLine(0 + closeXOffset, closeButtonSize + closeYOffset, closeButtonSize + closeXOffset, 0 + closeYOffset);
 	}
 	
-	public static BufferedImage getStickyImage(int width, int height)
+	public static BufferedImage getStickyImage(int width, int height, int topPartHeight)
 	{
 		BufferedImage stickyImage = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);
 		
 		Graphics2D graphics = stickyImage.createGraphics();
-		drawStickyNote(graphics, width, height);
+		drawStickyNote(graphics, width, height, topPartHeight);
 		
 		return stickyImage;
 	}
